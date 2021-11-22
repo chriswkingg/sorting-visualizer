@@ -4,23 +4,29 @@
 #include <thread>
 #include <chrono>
 
-#define SCREENWIDTH 600
+#define SCREENWIDTH 1000
 #define SCREENHEIGHT 400
 
 using namespace sf;
-using namespace std::chrono_literals; //this is probably bad
+
+int numBars = 100;
 
 void DrawBars(RenderWindow &window, int *barHeight) {
-    for(int i = 0; i < 10; i++) {
-        RectangleShape bar(Vector2f(100, barHeight[i]));
-        bar.setPosition(SCREENWIDTH / 10 * i, SCREENHEIGHT - barHeight[i]);
+    for(int i = 0; i < numBars; i++) {
+        RectangleShape bar(Vector2f(SCREENWIDTH / numBars, barHeight[i]));
+        bar.setPosition((SCREENWIDTH / numBars) * i, SCREENHEIGHT - barHeight[i]);
         window.draw(bar);
     }
 }
 
 int main() {
     RenderWindow window(VideoMode(SCREENWIDTH, SCREENHEIGHT), "Bubble Sort");
-    int barHeight[10] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+    window.setFramerateLimit(60);
+    int *barHeight = (int *) malloc(sizeof(int) * numBars);
+    int i = 0;
+    for(int j = 0; j < numBars; j++) {
+        barHeight[j] = rand() % 100 + 100;
+    }
     while (window.isOpen())
     {
         Event event;
@@ -32,9 +38,18 @@ int main() {
         window.clear();
         DrawBars(window, barHeight);
         window.display();
-        std::this_thread::sleep_for(2000ms);
-        barHeight[0] = 1000;
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //sort
+        if(i < numBars) {
+            for(int j = i; j < numBars; j++) {
+                if(barHeight[i] > barHeight[j]) {
+                    int temp = barHeight[i];
+                    barHeight[i] = barHeight[j];
+                    barHeight[j] = temp;
+                }
+            }
+            i++;
+        }
     }
-
     return 0;
 }
