@@ -17,23 +17,21 @@ void DrawBars(RenderWindow &window, int *barHeight) {
     for(int i = 0; i < numBars; i++) {
         RectangleShape bar(Vector2f(SCREENWIDTH / numBars, barHeight[i]));
         bar.setPosition((SCREENWIDTH / numBars) * i, SCREENHEIGHT - barHeight[i]);
-        bar.setFillColor(i == compareBar + 1 ? Color::Green : i == compareBar ? Color::Red : Color::White);
+        bar.setFillColor(i == compareBar + 1 ? Color::Red : i == compareBar ? Color::Green : Color::White);
         window.draw(bar);
     }
 }
 
 int main() {
     RenderWindow window(VideoMode(SCREENWIDTH, SCREENHEIGHT), "Bubble Sort");
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(120);
     int *barHeight = (int *) malloc(sizeof(int) * numBars);
     for(int j = 0; j < numBars; j++) {
         barHeight[j] = rand() % SCREENHEIGHT;
     }
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
                 window.close();
         }
