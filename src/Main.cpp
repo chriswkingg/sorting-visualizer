@@ -1,8 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
 #include <random>
-#include <iostream>
-#include <string>
 
 #define SCREENWIDTH 1200
 #define SCREENHEIGHT 900
@@ -10,6 +7,7 @@
 using namespace sf;
 
 RenderWindow window(VideoMode(SCREENWIDTH, SCREENHEIGHT), "Bubble Sort");
+Mutex mutex;
 int numBars = 150;
 int currentBar = 0;
 int compareBar = 0;
