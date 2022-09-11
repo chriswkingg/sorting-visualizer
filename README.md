@@ -1,3 +1,3 @@
 # sfml-sorting
  
-Still a work in progress
+ A cool little bubble sort visualizer written in C++ with SFML
